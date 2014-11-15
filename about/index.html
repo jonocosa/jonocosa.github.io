@@ -7,7 +7,7 @@
     
 
     <title>
-      Jonocosa | Hi, I’m José Santos, a web developer and geek working as a freelancer. 
+      about 
     </title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -15,18 +15,18 @@
       <meta name="author" content="José Santos">
     
     
-      <meta name="description" content="Jonocosa is José Santos Personal topics are Node.js Wordpress Webdevelopment">
+      <meta name="description" content="This is a test page">
     
 
-    <meta name="description" content="Jonocosa is José Santos Personal topics are Node.js Wordpress Webdevelopment">
+    <meta name="description" content="This is a test page">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Jonocosa | Hi, I’m José Santos, a web developer and geek working as a freelancer.">
-<meta property="og:url" content="http://jonocosa.github.io/">
+<meta property="og:title" content="about">
+<meta property="og:url" content="http://jonocosa.github.io/about/index.html">
 <meta property="og:site_name" content="Jonocosa">
-<meta property="og:description" content="Jonocosa is José Santos Personal topics are Node.js Wordpress Webdevelopment">
+<meta property="og:description" content="This is a test page">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Jonocosa | Hi, I’m José Santos, a web developer and geek working as a freelancer.">
-<meta name="twitter:description" content="Jonocosa is José Santos Personal topics are Node.js Wordpress Webdevelopment">
+<meta name="twitter:title" content="about">
+<meta name="twitter:description" content="This is a test page">
 
     
     
@@ -47,8 +47,8 @@
     </span>
 
     
- 
-<header class="panel-cover">
+
+<header class="panel-cover panel-cover--collapsed">
 
 
 
@@ -184,78 +184,111 @@ classes that you can use:
 
     <div class="content-wrapper">
         <div class="content-wrapper__inner entry">
+            <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.min.js"></script>
+
+<script id="profile-template" type="text/x-handlebars-template">
+<figure class="profile-avatar"><img src="{{user.images.[138]}}" alt=""></figure>
+        <h1 class="profile-name">{{user.display_name}}</h1>
+        <div class="profile-fields">
+            <ul class="field-list">
+                {{#each user.fields}}
+                    <li class="field-item">{{this}}</li>
+                {{/each}}
+            </ul>
+        </div>
+<div class="profile-location fi-marker">{{user.city}}, {{user.country}}</div>
+
+</script>
+
+<div id="portfolio" class="portfolio-area clearfix">      
+    <script id="portfolio-template" type="text/x-handlebars-template">
+        <ul class="portfolio-list clearfix">
+          {{#each projects}}
+          <li class="portfolio-item">
             
-
-
-   <!-- do nothing -->
-
-
-<div class="main-post-list">
-    <ol class="post-list">
-    
-    
-    <li>
-
-      <h2 class="post-list__post-title post-title"><a href="/2014/11/15/page/" title="link to page">page</a></h2>
-
-      <p class="excerpt">
-        
-      </p>
-
-      <div class="post-list__meta">
-
-        <time datetime="Nov 15 2014" class="post-list__meta--date date">Nov 15 2014</time> &#8226; 
-
-        <span class="post-list__meta--tags tags">
-          <font class="categories">
+            <div class="portfolio-content">
+    <figure class="portfolio-cover" title="{{this.name}}">
+        {{#if this.covers.[404]}}
+        <img class="portfolio-image" src="{{this.covers.[404]}}" alt="">
+        {{else}}
+            {{#if this.covers.[230]}}
+            <img class="portfolio-image" src="{{this.covers.[230]}}" alt="">
+            {{else}}
+            <img class="portfolio-image" src="{{this.covers.[202]}}" alt="">
+            {{/if}}
+        {{/if}}
+    </figure>
+    <h2 class="portfolio-title">{{this.name}}</h2>
+    <div class="portfolio-fields">
+        <ul class="field-list">
+        {{#each this.fields}}
+            <li class="field-item">{{this}}</li>
+        {{/each}}
+        </ul>
+    </div>
+</div>
             
-          </font>
-          
+          </li>
+          {{/each}}
+        </ul>
+    </script>
+</div>
 
-        </span>
-      </div>
-
-      <hr class="post-list__divider" />
-    </li>
+<div id="content" class="content-area clearfix">
+  <div id="power" class="power-by">
+    <p>Powered by</p>
+    <p><a class="power-logo fi-social-behance" href="http://www.behance.net/" title="Behance" target="_blank">Behance</a></p>
+</div>
+  
+  <script >
+var apiKey  = 'DqQGZSNJy9D8aBENctgRNfItcw7uUGtk';
+var userID  = 'jonocosa';
+  
+  (function() {
+    var behanceUserAPI = 'http://www.behance.net/v2/users/'+ userID +'?callback=?&api_key='+ apiKey;
+    function setUserTemplate() {
+        var userData    = JSON.parse(sessionStorage.getItem('behanceUser')),
+        getTemplate = $('#profile-template').html(),
+        template    = Handlebars.compile(getTemplate),
+        result      = template(userData);
+        $('#header').html(result);
+    };
+    if(sessionStorage.getItem('behanceUser')) {
+        setUserTemplate();
+    } else {
+        $.getJSON(behanceUserAPI, function(user) {
+            var data = JSON.stringify(user);
+            sessionStorage.setItem('behanceUser', data);
+            setUserTemplate();
+        });
+    };
+})();
     
-    <li>
+    (function() {
+    var perPage = 12;
+    var behanceProjectAPI = 'http://www.behance.net/v2/users/'+ userID +'/projects?callback=?&api_key=' + apiKey + '&per_page=' + perPage;
+ 
+    function setPortfolioTemplate() {
+        var projectData = JSON.parse(sessionStorage.getItem('behanceProject')),
+            getTemplate = $('#portfolio-template').html(),
+            template    = Handlebars.compile(getTemplate),
+            result      = template(projectData);
+        $('#portfolio').html(result);
+    };
+ 
+    if(sessionStorage.getItem('behanceProject')) {
+        setPortfolioTemplate();
+    } else {
+        $.getJSON(behanceProjectAPI, function(project) {
+            var data = JSON.stringify(project);
+            sessionStorage.setItem('behanceProject', data);
+            setPortfolioTemplate();
+        });
+    };
+})();
 
-      <h2 class="post-list__post-title post-title"><a href="/2014/07/16/test/" title="link to Static site generators A brave new world">Static site generators A brave new world</a></h2>
-
-      <p class="excerpt">
-        <p><img src="../images/hugo.png" alt=""><br>For a while now I played with the idea for creating a new personal now I like most people I wanted to open the site that I created</p>
-
-      </p>
-
-      <div class="post-list__meta">
-
-        <time datetime="Jul 16 2014" class="post-list__meta--date date">Jul 16 2014</time> &#8226; 
-
-        <span class="post-list__meta--tags tags">
-          <font class="categories">
-            
-          </font>
-          
-
-        </span>
-      </div>
-
-      <hr class="post-list__divider" />
-    </li>
-    
-  </ol>
-
-  <hr class="post-list__divider " />
-
-<nav class="pagination" role="navigation">
-    
-
-    <span class="pagination__page-number">Page 1 of 1</span>
-    
-    
-</nav>
-
-
+</script>
 </div>
             <footer class="footer">
     <span class="footer__copyright">&copy; 2014. All rights reserved.</span>

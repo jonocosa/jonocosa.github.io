@@ -1,13 +1,10 @@
-# gatsby-starter-default
-The default Gatsby starter
+# José Santos Gatsby blog
+My personal website based on Gatsby starter
 
-For an overview of the project structure please refer to the [Gatsby documentation - Building with Components](https://www.gatsbyjs.org/docs/building-with-components/)
+For an overview of [Gatsby](https://www.gatsbyjs.org/)
 
 Install this starter (assuming Gatsby is installed) by running from your CLI:
 ```
-gatsby new gatsby-example-site
+npm install
+npm run develop
 ```
-
-## Deploy
-
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/gatsbyjs/gatsby-starter-default)

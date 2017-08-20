@@ -1,0 +1,2 @@
+webpackJsonp([0x5ff96f51c0d6c400],{"./node_modules/json-loader/index.js!./.cache/json/post-listing.json":function(o,e){o.exports={data:{allMarkdownRemark:{edges:[{node:{excerpt:"Oooooh-weeee, my first blog post!\nThis is working ++Hello Title++ ppppp",id:"/mnt/c/Users/jonoc/Desktop/sites/jonocosa.github.io/src/pages/blog/07-12-2017-getting-started/index.md absPath of file >>> MarkdownRemark",frontmatter:{title:"My First Gatsby Post",date:"July 12, 2017",path:"/hello-world"}}}]}},pathContext:{}}}});
+//# sourceMappingURL=path---post-listing-127675b13e086ddcdb94.js.map
